@@ -1,0 +1,118 @@
+{extend name='public/base' /}
+{/*格式化header menu*/}
+{block name='header'}{/block}
+{block name='menu'}{/block}
+
+{block name='seo'}
+<title>{$title|default='网页标题'}</title>
+<meta name="keywords" content="{$keywords|default='网页关键字'}">
+<meta name="description" content="{$desc|default='网页描述'}">
+</head>
+<body>
+{/block}
+
+{block name='content'}
+<article class="cl pd-20">
+	<form action="" method="post" class="form form-horizontal" id="form-admin-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>姓名：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="姓名" id="adminName" name="name">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>学历：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="学历"  name="degree">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="手机"  name="mobile">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red"></span>毕业学校：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="毕业学校"  name="school">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red"></span>入职时间：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="2018-01-01"  name="hiredate">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">班级分配：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:auto;">
+				<select class="select" name="grade_id" size="1">
+					<option value="0">暂不分配</option>
+					{volist name="gradeList" id="vo"}
+					<option value="{$vo.id}">{$vo.name}</option>
+					{/volist}
+				</select>
+				</span> </div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red"></span>状态：</label>
+			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+				<div class="radio-box">
+					<input name="status" type="radio" id="sex-1" value="1" checked>
+					<label for="sex-1">启用</label>
+				</div>
+				<div class="radio-box">
+					<input name="status" type="radio" value="0" id="sex-2" >
+					<label for="sex-2">停用</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</article>
+{/block}
+
+{block name='js'}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+$(function(){
+
+
+	//表单ajax提交
+	$("form").submit(function (e) {
+	    //禁止表单提交
+		e.preventDefault();
+		//使用ajax提交
+		$.ajax({
+			type:'POST',
+			url:'',
+			data:$('form').serialize(),
+			dataType:'json',
+			success:function (data) {
+				if(data.status == 1){
+				    layer.msg(data.message,{icon:1,time:2000});
+                    setTimeout(parent.location.reload(),2000);
+				}else{
+				    layer.msg(data.message,{icon:5,time:2000});
+				}
+            }
+		})
+    });
+
+});
+
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+{/block}

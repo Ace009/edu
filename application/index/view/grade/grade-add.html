@@ -1,0 +1,160 @@
+{extend name='public/base' /}
+{/*格式化header menu*/}
+{block name='header'}{/block}
+{block name='menu'}{/block}
+
+{block name='seo'}
+<title>{$title|default='网页标题'}</title>
+<meta name="keywords" content="{$keywords|default='网页关键字'}">
+<meta name="description" content="{$desc|default='网页描述'}">
+</head>
+<body>
+{/block}
+
+{block name='content'}
+<article class="cl pd-20">
+	<form action="" method="post" class="form form-horizontal" id="form-admin-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>班级名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="班级名称" id="adminName" name="name">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>学制：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="学制"  name="length">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>学费：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="学费"  name="price">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red"></span>开学时间：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="2018-01-01"  name="start_time">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red"></span>状态：</label>
+			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+				<div class="radio-box">
+					<input name="status" type="radio" id="sex-1" value="1" checked>
+					<label for="sex-1">启用</label>
+				</div>
+				<div class="radio-box">
+					<input name="status" type="radio" value="0" id="sex-2" >
+					<label for="sex-2">停用</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</article>
+{/block}
+
+{block name='js'}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+$(function(){
+
+	/*$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});*/
+	
+	/*$("#form-admin-add").validate({
+		rules:{
+			name:{
+				required:true,
+				minlength:3,
+				maxlength:16
+			},
+			password:{
+				required:true,
+				minlength:6,
+				maxlength:16
+			},
+			password2:{
+				required:true,
+				equalTo: "#password"
+			},
+			email:{
+				required:true,
+				email:true,
+			},
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+		    if(isSub[0] == 1 && isSub[1] == 1 ){
+		        $.ajax({
+					type:"POST",
+					url:"",
+					data:$("form").serialize(),
+					dataType:"json",
+					success:function (data) {
+					    if(data.status == 1){
+                            layer.msg(data.message,{icon:1,time:1000});
+                            setTimeout(parent.location.reload(),2000);	{/!*刷新父页面*!/}
+                            /!*var index = parent.layer.getFrameIndex(window.name);
+                            parent.$('.btn-refresh').click();
+                            parent.layer.close(index);*!/
+						}else{
+                            layer.msg(data.message,{icon:5,time:2000});
+						}
+                    }
+				});
+                /!*$(form).ajaxSubmit();
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.$('.btn-refresh').click();
+                parent.layer.close(index);*!/
+			}else{
+                layer.msg("请检查表单数据合法性!",{icon:5,time:2000});
+			}
+
+		}
+	});*/
+
+	//表单ajax提交
+	$("form").submit(function (e) {
+	    //禁止表单提交
+		e.preventDefault();
+		//使用ajax提交
+		$.ajax({
+			type:'POST',
+			url:'',
+			data:$('form').serialize(),
+			dataType:'json',
+			success:function (data) {
+				if(data.status == 1){
+				    layer.msg(data.message,{icon:1,time:2000});
+                    setTimeout(parent.location.reload(),2000);
+				}else{
+				    layer.msg(data.message,{icon:5,time:2000});
+				}
+            }
+		})
+    });
+
+});
+
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+{/block}
